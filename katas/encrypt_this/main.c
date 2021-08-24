@@ -5,8 +5,10 @@
 
 char* encrypt_this(const char* str)
 {
-    char input_str[strlen(str)];
+    char* input_str = malloc(sizeof(char) * strlen(str));
     strcpy(input_str, str);
+
+    if(strlen(input_str) == 0) return input_str;
 
     char* encryptPhrase = malloc(sizeof(char) * 256);
     memset(encryptPhrase, 0, sizeof(char) * 256);
@@ -22,7 +24,7 @@ char* encrypt_this(const char* str)
         sprintf(firstCharAsIntAsString, "%d", firstCharAsInt);
 
         // save word without first character
-        char word_without_head[strlen(word)-1];
+        char* word_without_head = malloc(sizeof(char) * strlen(word)-1);
         strcpy(word_without_head, &word[1]);
 
         // swap first and last characters
@@ -32,7 +34,7 @@ char* encrypt_this(const char* str)
 
         // concatenate int-as-string and the left of the word
         unsigned long size_encryptedWord = strlen(word_without_head) + strlen(firstCharAsIntAsString);
-        char encryptedWord[size_encryptedWord];
+        char* encryptedWord = malloc(sizeof(char) * size_encryptedWord);
         memset(encryptedWord, 0, size_encryptedWord);
         strcat(encryptedWord, firstCharAsIntAsString);
         strcat(encryptedWord, word_without_head);
@@ -40,6 +42,9 @@ char* encrypt_this(const char* str)
         // concatenate to the full phrase this word and add a space
         strcat(encryptPhrase, encryptedWord);
         strcat(encryptPhrase, " ");
+
+        //free(encryptedWord);
+        //free(word_without_head);
 
         // looking for more words
         word = strtok (NULL, " ");
@@ -51,6 +56,7 @@ char* encrypt_this(const char* str)
         encryptPhrase[strlen(encryptPhrase) -1] = '\0';
     }
 
+    //free(input_str);
     return encryptPhrase;
 }
 
@@ -67,8 +73,6 @@ void do_test(const char* input, const char* expected_result)
     {
         fprintf(stderr, "Input: %s != %s\n", actual, expected_result);
     }
-
-    //free(actual);
 }
 
 int main()

@@ -14,3 +14,5 @@ Examples:
     encrypt_this("Hello") == "72olle"
     encrypt_this("good") == "103doo"
     encrypt_this("hello world") == "104olle 119drlo"
+
+⚠ There are two versions: C and C++. The codewar's kata is only in C, but I want to create both versions.

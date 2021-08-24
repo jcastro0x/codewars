@@ -1,6 +1,7 @@
 **/.DS_Store
 **/.idea/
 **/.vs/
-**/.vcode/
+**/.vscode/
 **/cmake-build-debug/
 **/cmake-build-release/
+build/

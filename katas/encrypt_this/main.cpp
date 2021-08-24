@@ -25,13 +25,15 @@ std::string encrypt_this(const std::string& str)
         const int firstCharAsInt = static_cast<unsigned char>(word.front());
 
         word = word.substr(1, word.size() - 1);
-        std::swap(word.front(), word.back());
+        {
+            std::swap(word.front(), word.back());
 
-        word = std::to_string(firstCharAsInt) + word;
-        encrypted_string += word + " ";
+            word = std::to_string(firstCharAsInt) + word;
+            encrypted_string += word + " ";
+        }
     }
 
-    if(std::isspace(encrypted_string.back()))
+    if(!encrypted_string.empty() && std::isspace(encrypted_string.back()))
         encrypted_string = encrypted_string.substr(0, encrypted_string.size() -1);
 
     return encrypted_string;
