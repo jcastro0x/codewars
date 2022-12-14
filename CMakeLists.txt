@@ -1,24 +1,41 @@
 cmake_minimum_required(VERSION 3.20)
 project(codewars)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_C_STANDARD 11)
 
+#
+# Linux hasn't MSVC CRT functions, so don't allow platform-specific code
 if(MSVC)
     add_definitions(-D_CRT_SECURE_NO_WARNINGS)
 endif()
 
-# Find boost to Boost::Test (header only)
-find_package(Boost REQUIRED)
-if(Boost_FOUND)
-    include_directories(${Boost_INCLUDE_DIRS})
-endif()
+#
+# Add Google Test
+add_subdirectory("libs/googletest")
+add_subdirectory("libs/check")
 
-# Get all katas subdirectory automatically
-set(KATAS_DIR ${CMAKE_SOURCE_DIR}/katas)
-file(GLOB children RELATIVE ${KATAS_DIR} ${KATAS_DIR}/*)
-foreach(child ${children})
-    if(IS_DIRECTORY ${KATAS_DIR}/${child})
-        add_subdirectory(${KATAS_DIR}/${child})
-    endif()
-endforeach()
+#
+# Look for projects into @PATH directory and add it as subdirectory.
+# Once added, link libraries @UNIT_TEST to it.
+function(AddKatas PATH UNIT_TEST)
+    file(GLOB children RELATIVE ${PATH} ${PATH}/*)
+    foreach(child ${children})
+        if(IS_DIRECTORY ${PATH}/${child})
+            add_subdirectory(${PATH}/${child})
+            target_link_libraries(${child} ${UNIT_TEST})
+            message("Added kata: " ${child})
+        endif()
+    endforeach()
+endfunction()
+
+
+message( "##############################################################" )
+message( "#                      C++ KATAS                             #" )
+message( "##############################################################" )
+AddKatas(${CMAKE_SOURCE_DIR}/katas/cxx gtest_main)
+
+message( "##############################################################" )
+message( "#                       C KATAS                              #" )
+message( "##############################################################" )
+AddKatas(${CMAKE_SOURCE_DIR}/katas/c check)
