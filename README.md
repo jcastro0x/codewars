@@ -1,54 +1,12 @@
 ![](https://cdn.icon-icons.com/icons2/2530/PNG/512/codewars_button_icon_151901.png)
 
-My solutions to the katas in codewars.
-
-Each directory it's a kata. In their directories are a README with the instructions of the kata, and the URL to it.
-
-In addition to the requisites of each kata, I trie to do a more generic code in each of them. For example, creating a
-code that still works even if add more variables to them.
-
 ![](https://www.codewars.com/users/jcastro0x/badges/large)
 
+My solutions to [CodeWars](https://www.codewars.com/)' katas. <br>
+Each directory it's a kata. In their directories are a __README__ with the instructions of the kata, and the URL to it.
 
-# C++ tests
-I use boost to create the unit tests. If you want to build the code without this, just remove the boost includes and
-the BOOST_AUTO_TEST_CASE section (or use boost 😜) and create your own entry point.
+# Unit test frameworks
+I use [GoogleTest](https://github.com/google/googletest) for C++ katas and [Criterion](https://github.com/Snaipe/Criterion) for C katas. 
+Remember to use ```--recurse-submodules``` when you clone:
 
-```c++
-// Remove this two lines
-#define BOOST_TEST_MODULE EncryptThis
-#include <boost/test/included/unit_test.hpp>
-
-...
-
-// And this block
-BOOST_AUTO_TEST_CASE(UniqueTest)
-{
-    ...
-}
-```
-
-# C tests
-Katas writen in C hasn't any test library, so I created a custom main and do_test functions to check tests, so not any
-action is required to build this, it's only ANSI C code that would compile with any C11 compiler.
-
-```c
-void do_test(...)
-{
-    ... actual = function(...);
-    
-    if(actual == expected_result)
-    {
-        fprintf(stdout, "Input: %s == %d\n", input, expected_result);
-    }
-    else
-    {
-        fprintf(stderr, "Input: %s != %d\n", input, expected_result);
-    }
-}
-
-int main()
-{
-    do_test(...);
-}
-```
+    git clone https://github.com/jcastro0x/codewars.git --recurse-submodules
