@@ -2,11 +2,15 @@
 
 ![](https://www.codewars.com/users/jcastro0x/badges/large)
 
-My solutions to [CodeWars](https://www.codewars.com/)' katas. <br>
-Each directory it's a kata. In their directories are a __README__ with the instructions of the kata, and the URL to it.
+This repository includes my answers to [CodeWars](https://www.codewars.com/) katas.
 
-# Unit test frameworks
-I use [GoogleTest](https://github.com/google/googletest) for C++ katas and [Criterion](https://github.com/Snaipe/Criterion) for C katas. 
-Remember to use ```--recurse-submodules``` when you clone:
+Each folder corresponds to a specific kata. Inside these folders, a __README__ file can be found which contains the 
+instructions for the kata, along with the associated URL.
+
+# Testing Frameworks
+For C++ katas, I utilize [GoogleTest](https://github.com/google/googletest), and for C katas, I employ [Criterion](https://github.com/Snaipe/Criterion).
+
+Ensure to use the ```--recurse-submodules``` parameter during the cloning process:
 
     git clone https://github.com/jcastro0x/codewars.git --recurse-submodules
+
