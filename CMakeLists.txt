@@ -1,7 +1,9 @@
 cmake_minimum_required(VERSION 3.20)
 project(codewars)
 
-set(CMAKE_CXX_STANDARD 20)
+enable_testing()
+
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_C_STANDARD 11)
 
 #
@@ -25,6 +27,8 @@ function(AddKatas PATH UNIT_TEST)
             add_subdirectory(${PATH}/${child})
             target_link_libraries(${child} ${UNIT_TEST})
             message("Added kata: " ${child})
+
+            add_test(NAME ${child} COMMAND ${child})
         endif()
     endforeach()
 endfunction()
