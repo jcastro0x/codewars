@@ -1,4 +1,4 @@
-#include <check.h>
+#include <unity.h>
 
 #include <stdbool.h>
 #include <stdlib.h>
@@ -7,6 +7,8 @@
 #include <ctype.h>
 #include <stdint.h>
 
+void setUp(void) {}
+void tearDown(void) {}
 
 bool IsIsogram(const char *str)
 {
@@ -41,16 +43,17 @@ bool IsIsogram(const char *str)
     return true;
 }
 
-START_TEST(test_money_create)
+void test_isograms(void)
 {
-    ck_assert_int_eq(IsIsogram("a_string"),         1);
-    ck_assert_int_eq(IsIsogram("Dermatoglyphics"),  1);
-    ck_assert_int_eq(IsIsogram("aba"),              0);
-    ck_assert_int_eq(IsIsogram("moOse"),            0);
+    TEST_ASSERT_TRUE(IsIsogram("a_string"));
+    TEST_ASSERT_TRUE(IsIsogram("Dermatoglyphics"));
+    TEST_ASSERT_FALSE(IsIsogram("aba"));
+    TEST_ASSERT_FALSE(IsIsogram("moOse"));
 }
-END_TEST
 
-int main()
+int main(void)
 {
-    return 0;
+    UNITY_BEGIN();
+    RUN_TEST(test_isograms);
+    return UNITY_END();
 }

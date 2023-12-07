@@ -1,13 +1,16 @@
-#include <check.h>
+#include <unity.h>
 
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
 #include <ctype.h>
 
+void setUp(void) {}
+void tearDown(void) {}
+
 char* encrypt_this(const char* str)
 {
-    char* input_str = malloc(sizeof(char) * strlen(str));
+    char* input_str = malloc(sizeof(char) * (strlen(str) + 1));
     strcpy(input_str, str);
 
     if(strlen(input_str) == 0) return input_str;
@@ -26,18 +29,21 @@ char* encrypt_this(const char* str)
         sprintf(firstCharAsIntAsString, "%d", firstCharAsInt);
 
         // save word without first character
-        char* word_without_head = malloc(sizeof(char) * strlen(word)-1);
+        char* word_without_head = malloc(sizeof(char) * strlen(word));
         strcpy(word_without_head, &word[1]);
 
         // swap first and last characters
-        char temp = word_without_head[0];
-        word_without_head[0] = word_without_head[strlen(word_without_head)-1];
-        word_without_head[strlen(word_without_head)-1] = temp;
+        if(strlen(word_without_head) > 1)
+        {
+            char temp = word_without_head[0];
+            word_without_head[0] = word_without_head[strlen(word_without_head)-1];
+            word_without_head[strlen(word_without_head)-1] = temp;
+        }
 
         // concatenate int-as-string and the left of the word
         unsigned long size_encryptedWord = strlen(word_without_head) + strlen(firstCharAsIntAsString);
-        char* encryptedWord = malloc(sizeof(char) * size_encryptedWord);
-        memset(encryptedWord, 0, size_encryptedWord);
+        char* encryptedWord = malloc(sizeof(char) * (size_encryptedWord + 1));
+        memset(encryptedWord, 0, size_encryptedWord + 1);
         strcat(encryptedWord, firstCharAsIntAsString);
         strcat(encryptedWord, word_without_head);
 
@@ -63,18 +69,20 @@ char* encrypt_this(const char* str)
 }
 
 
-START_TEST(test_money_create)
+void test_encrypt_this(void)
 {
-     ck_assert_str_eq(encrypt_this(""), "");
-     ck_assert_str_eq(encrypt_this("A"), "65");
-     ck_assert_str_eq(encrypt_this("Ab"), "65b");
-     ck_assert_str_eq(encrypt_this("Abcd"), "65dcb");
-     ck_assert_str_eq(encrypt_this("  Abcd   Abcd"), "65dcb 65dcb");
-     ck_assert_str_eq(encrypt_this("Abcd Aahhhhhhhhhhhhhhhhz"), "65dcb 65zhhhhhhhhhhhhhhhha");
-     ck_assert_str_eq(encrypt_this(" Hello world "), "72olle 119drlo");
+     TEST_ASSERT_EQUAL_STRING("", encrypt_this(""));
+     TEST_ASSERT_EQUAL_STRING("65", encrypt_this("A"));
+     TEST_ASSERT_EQUAL_STRING("65b", encrypt_this("Ab"));
+     TEST_ASSERT_EQUAL_STRING("65dcb", encrypt_this("Abcd"));
+     TEST_ASSERT_EQUAL_STRING("65dcb 65dcb", encrypt_this("  Abcd   Abcd"));
+     TEST_ASSERT_EQUAL_STRING("65dcb 65zhhhhhhhhhhhhhhhha", encrypt_this("Abcd Aahhhhhhhhhhhhhhhhz"));
+     TEST_ASSERT_EQUAL_STRING("72olle 119drlo", encrypt_this(" Hello world "));
 }
 
-int main()
+int main(void)
 {
-    return 0;
+    UNITY_BEGIN();
+    RUN_TEST(test_encrypt_this);
+    return UNITY_END();
 }

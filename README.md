@@ -8,9 +8,9 @@ Each folder corresponds to a specific kata. Inside these folders, a __README__ f
 instructions for the kata, along with the associated URL.
 
 # Testing Frameworks
-For C++ katas, I utilize [GoogleTest](https://github.com/google/googletest), and for C katas, I employ [Criterion](https://github.com/Snaipe/Criterion).
+For C++ katas, I utilize [GoogleTest](https://github.com/google/googletest), and for C katas, I employ [Unity](https://github.com/ThrowTheSwitch/Unity).
 
-Ensure to use the ```--recurse-submodules``` parameter during the cloning process:
+Dependencies are fetched automatically via CMake's FetchContent:
 
-    git clone https://github.com/jcastro0x/codewars.git --recurse-submodules
+    git clone https://github.com/jcastro0x/codewars.git
 
