@@ -11,7 +11,7 @@ std::string to_camel_case(std::string text) {
     // Add any delimiter. The code will still work!
     constexpr std::array<char,2> delimiters = { '_', '-' };
 
-    if(!text.empty()) for(int i = 1; i < text.size() - 1; i++)
+    if(!text.empty()) for(int i = 1; i < text.size(); i++)
     {
         if(std::any_of(delimiters.begin(), delimiters.end(), [&](const auto& d) {
             return d == text[i];

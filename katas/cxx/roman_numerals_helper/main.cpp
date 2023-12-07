@@ -77,7 +77,7 @@ RomanHelper::RomanNumberSize_t RomanHelper::from_roman(std::string_view rn) {
         = decimals[static_cast<size_t>(std::distance(letters.begin(), std::find(letters.begin(), letters.end(), c)))];
 
         if(decimalValue <= lastDecimalValue) total += decimalValue;
-        else                                 total += decimalValue - lastDecimalValue - 1;
+        else                                 total += decimalValue - 2 * lastDecimalValue;
 
         lastDecimalValue = decimalValue;
     }

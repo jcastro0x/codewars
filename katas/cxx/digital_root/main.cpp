@@ -26,9 +26,6 @@ int digital_root(int n)
     return total >= 10
     ? digital_root(total)
     : total;
-
-    // Clever solution:
-    return --n % 9 + 1;
 }
 
 TEST(Codewars, digital_root)

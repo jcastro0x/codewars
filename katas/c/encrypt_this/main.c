@@ -51,8 +51,8 @@ char* encrypt_this(const char* str)
         strcat(encryptPhrase, encryptedWord);
         strcat(encryptPhrase, " ");
 
-        //free(encryptedWord);
-        //free(word_without_head);
+        free(encryptedWord);
+        free(word_without_head);
 
         // looking for more words
         word = strtok (NULL, " ");
@@ -64,7 +64,7 @@ char* encrypt_this(const char* str)
         encryptPhrase[strlen(encryptPhrase) -1] = '\0';
     }
 
-    //free(input_str);
+    free(input_str);
     return encryptPhrase;
 }
 
