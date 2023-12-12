@@ -1,3 +1,6 @@
+[![Windows](https://github.com/jcastro0x/codewars/actions/workflows/windows.yml/badge.svg)](https://github.com/jcastro0x/codewars/actions/workflows/windows.yml)
+[![Linux](https://github.com/jcastro0x/codewars/actions/workflows/linux.yml/badge.svg)](https://github.com/jcastro0x/codewars/actions/workflows/linux.yml)
+
 ![](https://cdn.icon-icons.com/icons2/2530/PNG/512/codewars_button_icon_151901.png)
 
 ![](https://www.codewars.com/users/jcastro0x/badges/large)
