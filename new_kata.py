@@ -34,7 +34,7 @@ if lang["api_name"] not in data.get("languages", []):
     sys.exit(1)
 
 # Create the kata folder
-slug = data["slug"]
+slug = data["slug"].replace("-", "_")
 base_dir = os.path.dirname(os.path.abspath(__file__))
 kata_dir = os.path.join(base_dir, "katas", lang["folder"], slug)
 
@@ -45,9 +45,42 @@ instructions_path = os.path.join(kata_dir, "instructions.md")
 with open(instructions_path, "w", encoding="utf-8") as f:
     f.write(data.get("description", ""))
 
+# Write the CMake configuration
+cmake_path = os.path.join(kata_dir, "CMakeLists.txt")
+with open(cmake_path, "w", encoding="utf-8") as f:
+    f.write(
+        "cmake_minimum_required(VERSION 3.20)\n"
+        f"project({slug})\n"
+        f"add_executable({slug} main{lang['ext']})\n"
+    )
+
 # Write the main source file
 source_path = os.path.join(kata_dir, "main" + lang["ext"])
 with open(source_path, "w", encoding="utf-8") as f:
-    f.write("// Kata: " + data["name"])
+    f.write("// Kata: " + data["name"] + "\n\n")
+    if args.language == "c++":
+        f.write(
+            "#include <gtest/gtest.h>\n\n"
+            f"TEST(Codewars, {slug})\n"
+            "{\n"
+            "    EXPECT_TRUE(true);\n"
+            "}\n"
+        )
+    else:
+        f.write(
+            "#include <unity.h>\n\n"
+            "void setUp(void) {}\n"
+            "void tearDown(void) {}\n\n"
+            f"void test_{slug}(void)\n"
+            "{\n"
+            "    TEST_ASSERT_TRUE(1);\n"
+            "}\n\n"
+            "int main(void)\n"
+            "{\n"
+            "    UNITY_BEGIN();\n"
+            f"    RUN_TEST(test_{slug});\n"
+            "    return UNITY_END();\n"
+            "}\n"
+        )
 
 print(f"Created: {kata_dir}")
